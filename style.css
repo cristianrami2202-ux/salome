@@ -1,0 +1,146 @@
+:root{--rosa:#ff4d79;--rosa-claro:#ffd6e2;--crema:#fff6ef;--vino:#8a1a3f}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:"Segoe UI",system-ui,Arial,sans-serif;
+  background:radial-gradient(circle at 50% 20%,#ffe3ec 0,#ffc2d4 55%,#ff9db9 100%);
+  color:var(--vino);overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* ---------- corazones de fondo ---------- */
+#corazones{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.corazon{
+  position:absolute;bottom:-40px;
+  animation:subir linear forwards;
+  user-select:none;
+}
+@keyframes subir{
+  0%{transform:translateY(0) translateX(0) rotate(0);opacity:0}
+  10%{opacity:.9}
+  100%{transform:translateY(-110vh) translateX(var(--dx)) rotate(var(--rot));opacity:0}
+}
+.explosion{
+  position:fixed;pointer-events:none;z-index:50;
+  animation:explotar .9s ease-out forwards;
+}
+@keyframes explotar{
+  0%{transform:translate(0,0) scale(.4);opacity:1}
+  100%{transform:translate(var(--x),var(--y)) scale(1.4);opacity:0}
+}
+
+/* ---------- escenas ---------- */
+.escena{
+  position:absolute;inset:0;z-index:2;
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  padding:16px;text-align:center;
+}
+.escena.activa{display:flex;animation:entrar .7s ease both}
+@keyframes entrar{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+
+.pista{font-size:1.5rem;font-weight:700;margin-bottom:34px;animation:latido 1.6s ease-in-out infinite}
+.toca{margin-top:34px;opacity:.75;font-size:.95rem}
+@keyframes latido{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+
+/* ---------- sobre ---------- */
+.sobre{
+  position:relative;width:min(300px,78vw);height:200px;
+  background:none;border:none;cursor:pointer;
+  animation:flotar 3s ease-in-out infinite;
+  filter:drop-shadow(0 14px 18px rgba(138,26,63,.35));
+}
+@keyframes flotar{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-12px) rotate(1deg)}}
+.sobre:hover{animation-play-state:paused;transform:scale(1.04)}
+.sobre-fondo{position:absolute;inset:0;background:#f7a8bf;border-radius:8px}
+.sobre-tapa{
+  position:absolute;left:0;top:0;width:100%;height:110px;
+  background:#ff8fae;
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:top;transition:transform .6s ease;z-index:4;border-radius:8px 8px 0 0;
+}
+.papel{
+  position:absolute;left:8%;top:10px;width:84%;height:170px;
+  background:var(--crema);border-radius:6px;z-index:2;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .8s ease .3s;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+}
+.papel-texto{font-size:1.1rem;color:var(--vino);line-height:1.4}
+.papel-texto b{font-size:1.8rem;font-family:Georgia,serif;font-style:italic}
+.sobre-frente{
+  position:absolute;left:0;bottom:0;width:100%;height:120px;z-index:3;
+  background:linear-gradient(135deg,#ffa7c0 50%,#ff8fae 50%);
+  clip-path:polygon(0 100%,0 0,50% 55%,100% 0,100% 100%);
+  border-radius:0 0 8px 8px;
+}
+.sello{
+  position:absolute;left:50%;top:92px;transform:translateX(-50%);z-index:5;
+  width:46px;height:46px;border-radius:50%;background:#d6204f;color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+  box-shadow:0 3px 8px rgba(0,0,0,.3);transition:opacity .3s;
+}
+.sobre.abierto{animation:none}
+.sobre.abierto .sobre-tapa{transform:rotateX(180deg)}
+.sobre.abierto .sello{opacity:0}
+.sobre.abierto .papel{transform:translateY(-120px) scale(1.08);z-index:6}
+
+/* ---------- oso ---------- */
+.burbuja{
+  position:relative;min-height:96px;max-width:min(440px,90vw);
+  background:#fff;border-radius:22px;padding:18px 22px;
+  font-size:1.1rem;line-height:1.5;color:var(--vino);
+  box-shadow:0 8px 22px rgba(138,26,63,.25);
+  margin-bottom:22px;display:flex;align-items:center;justify-content:center;
+}
+.burbuja::after{
+  content:"";position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);
+  border:14px solid transparent;border-top-color:#fff;border-bottom:0;
+}
+.cursor{margin-left:2px;animation:parpadeo .8s steps(1) infinite;color:var(--rosa)}
+@keyframes parpadeo{50%{opacity:0}}
+
+.oso-zona{display:flex;flex-direction:column;align-items:center}
+.oso{width:min(280px,64vw);cursor:pointer;overflow:visible;animation:respirar 3.2s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes respirar{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.025)}}
+.oso.salta{animation:salto .6s ease}
+@keyframes salto{
+  0%{transform:translateY(0) scale(1,1)}
+  30%{transform:translateY(-34px) scale(.96,1.05)}
+  60%{transform:translateY(0) scale(1.08,.92)}
+  100%{transform:translateY(0) scale(1,1)}
+}
+.oso.abrazo{animation:abrazo 1.2s ease}
+@keyframes abrazo{
+  0%,100%{transform:scale(1)}
+  25%{transform:scale(1.14,.9)}
+  50%{transform:scale(.96,1.06)}
+  75%{transform:scale(1.1,.94)}
+}
+
+#brazo-izq{transform-origin:75px 245px;animation:saludar 1.4s ease-in-out infinite}
+@keyframes saludar{0%,100%{transform:rotate(0)}50%{transform:rotate(-26deg)}}
+#brazo-izq.quieto{animation:none}
+#corazon-panza{transform-origin:150px 238px;animation:latir 1.2s ease-in-out infinite}
+@keyframes latir{0%,100%{transform:scale(1)}40%{transform:scale(1.22)}}
+#cabeza{transform-origin:150px 150px;transition:transform .12s ease-out}
+.parpado{transform:translateY(-30px);transition:transform .08s}
+.parpado.cierra{transform:translateY(0)}
+
+.hint{margin-top:10px;font-size:.9rem;opacity:.7}
+
+.botones{display:flex;gap:12px;margin-top:20px}
+.btn{
+  border:none;cursor:pointer;font-size:1rem;font-weight:700;
+  padding:12px 22px;border-radius:999px;color:#fff;
+  background:linear-gradient(135deg,var(--rosa),#e0245e);
+  box-shadow:0 6px 16px rgba(224,36,94,.4);
+  transition:transform .15s,box-shadow .15s;
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(224,36,94,.45)}
+.btn:active{transform:scale(.96)}
+.btn-sec{background:linear-gradient(135deg,#8a1a3f,#5e0f2a)}
+
+@media(max-height:700px){
+  .burbuja{min-height:80px;font-size:1rem;margin-bottom:16px}
+  .oso{width:min(220px,52vw)}
+}
